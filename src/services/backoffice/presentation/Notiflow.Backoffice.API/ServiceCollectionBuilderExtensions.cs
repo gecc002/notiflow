@@ -83,8 +83,7 @@ internal static class ServiceCollectionBuilderExtensions
     internal static IServiceCollection AddBackofficeHealthChecks(this WebApplicationBuilder builder)
     {
         builder.Services.AddHealthChecks()
-                .AddMsSqlDatabaseCheck(builder.Configuration[$"{nameof(NotiflowDbContext)}:{nameof(SqlSetting.ConnectionString)}"])
-                //.AddNpgSqlDatabaseCheck(builder.Configuration[$"{nameof(NotiflowDbContext)}:{nameof(SqlSetting.ConnectionString)}"])
+                .AddNpgSqlDatabaseCheck(builder.Configuration[$"{nameof(NotiflowDbContext)}:{nameof(SqlSetting.ConnectionString)}"])
                 .AddRedisCheck(builder.Configuration[$"{nameof(RedisServerSetting)}:{nameof(RedisServerSetting.ConnectionString)}"])
                 .AddSystemCheck()
                 .AddRabbitMqCheck("amqp://guest:guest@localhost:5672")
