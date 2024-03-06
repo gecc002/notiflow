@@ -22,7 +22,7 @@ namespace Puzzle.Lib.Documentation.Tests.Middlewares
         [Fact]
         public void UseSwaggerDoc_Should_Not_Use_Swagger_In_Production_Environment()
         {
-            _webHostEnvironmentMock.Setup(env => env.IsProduction()).Returns(true);
+            _webHostEnvironmentMock.Setup(x => x.IsProduction()).Returns(true);
 
             IApplicationBuilder appBuilder = _appBuilderMock.Object;
             appBuilder.ApplicationServices = _serviceProviderMock.Object;
@@ -37,7 +37,7 @@ namespace Puzzle.Lib.Documentation.Tests.Middlewares
         [Fact]
         public void UseSwaggerDoc_Should_Use_Swagger_In_Development_Environment()
         {
-            _webHostEnvironmentMock.Setup(env => env.IsProduction()).Returns(false);
+            _webHostEnvironmentMock.Setup(x => x.IsProduction()).Returns(false);
 
             IApplicationBuilder appBuilder = _appBuilderMock.Object;
             appBuilder.ApplicationServices = _serviceProviderMock.Object;
