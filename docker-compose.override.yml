@@ -1,0 +1,166 @@
+version: "3.8"
+
+services:
+  identityserver.mssql:
+    container_name: identityserver-mssql
+    restart: always
+    ports:
+      - 1433:1433
+    depends_on:
+      - redis-master
+      - redis-slave
+    volumes:
+      - identityserver.mssql_volume:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password123
+      - TZ=Europe/Istanbul
+    networks:
+      - notiflow_net
+
+  backoffice.postgresql:
+    container_name: backoffice-postgresql
+    restart: on-failure:2
+    ports:
+      - 5432:5432
+    depends_on:
+      - redis-master
+      - redis-slave
+    volumes:
+      - backoffice.postgresql_volume:/var/lib/postgresql/data
+    environment:
+      - TZ=Europe/Istanbul
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Password123
+      - POSTGRES_DB=notiflow
+    networks:
+      - notiflow_net
+
+  backoffice.rabbitmq.1:
+    container_name: backoffice-rabbitmq-1
+    hostname: backofficerabbitmq1
+    restart: on-failure
+    ports:
+      - 5672:5672
+      - 15672:15672
+    depends_on:
+      - backoffice.postgresql
+    volumes:
+      - backoffice.rabbitmq.1_volume:/var/lib/rabbitmq
+    environment:
+      - TZ=Europe/Istanbul
+      - RABBITMQ_ERLANG_COOKIE=secretcookie
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - notiflow_net
+
+  backoffice.rabbitmq.2:
+    container_name: backoffice-rabbitmq-2
+    hostname: backofficerabbitmq2
+    restart: on-failure
+    ports:
+      - 5673:5672
+      - 15673:15672
+    depends_on:
+      - backoffice.postgresql
+      - backoffice.rabbitmq.1
+    volumes:
+      - backoffice.rabbitmq.2_volume:/var/lib/rabbitmq
+    environment:
+      - TZ=Europe/Istanbul
+      - RABBITMQ_ERLANG_COOKIE=secretcookie
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - notiflow_net
+
+  projections.rabbitmq:
+    container_name: projections-rabbitmq
+    hostname: projectionsrabbitmq
+    restart: on-failure
+    ports:
+      - 5674:5672
+      - 15674:15672
+    depends_on:
+      - backoffice.rabbitmq.1
+      - backoffice.rabbitmq.2
+    volumes:
+      - projections.rabbitmq_volume:/var/lib/rabbitmq
+    environment:
+      - TZ=Europe/Istanbul
+      - RABBITMQ_ERLANG_COOKIE=secretcookie
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - notiflow_net
+
+  redis-master:
+    container_name: redis-master
+    hostname: redis-master
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-master_volume:/data
+    environment:
+      - TZ=Europe/Istanbul
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD=DMu4JbQ2ZnxyWFW
+    networks:
+      - notiflow_net
+
+  redis-slave:
+    container_name: redis-slave
+    hostname: redis-slave
+    restart: unless-stopped
+    ports:
+      - 6380:6379
+    depends_on:
+      - redis-master
+    volumes:
+      - redis-slave_volume:/data
+    environment:
+      - TZ=Europe/Istanbul
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=DMu4JbQ2ZnxyWFW
+      - REDIS_PASSWORD=DMu4JbQ2ZnxyWFW
+    networks:
+      - notiflow_net
+
+  elasticsearch:
+    container_name: elasticsearch
+    hostname: elasticsearch
+    restart: on-failure
+    ports:
+     - 9200:9200
+    environment:
+     - TZ=Europe/Istanbul
+     - xpack.security.enabled=false
+     - "discovery.type=single-node"
+     - ELASTIC_USERNAME=notiflow-elastic
+     - ELASTIC_PASSWORD=6If4nbU56pLPaoMJ
+    volumes:
+     - elastic_volume:/usr/share/elasticsearch/data
+    networks:
+      - notiflow_net
+
+  kibana:
+    container_name: kibana
+    hostname: kibana
+    restart: on-failure
+    ports:
+     - 5601:5601
+    environment:
+     - TZ=Europe/Istanbul
+     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+     - elasticsearch
+    networks:
+      - notiflow_net
+
+networks:
+  notiflow_net:
+    driver: bridge

@@ -1,0 +1,17 @@
+﻿global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Diagnostics;
+global using Microsoft.EntityFrameworkCore.Query;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Logging;
+global using Puzzle.Lib.Database.Infrastructure;
+global using Puzzle.Lib.Database.Infrastructure.Extensions;
+global using Puzzle.Lib.Database.Interceptors;
+global using Puzzle.Lib.Database.Interfaces;
+global using System.Data.Common;
+global using System.Linq.Expressions;
+global using System.Reflection;
+global using System.Text.Json.Serialization;
+global using System.Transactions;

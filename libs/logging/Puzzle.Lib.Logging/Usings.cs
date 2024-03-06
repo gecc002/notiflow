@@ -1,0 +1,15 @@
+﻿global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.HttpLogging;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Puzzle.Lib.Logging.Infrastructure;
+global using Serilog;
+global using Serilog.Events;
+global using Serilog.Exceptions;
+global using Serilog.Filters;
+global using Serilog.Formatting.Elasticsearch;
+global using Serilog.Sinks.Elasticsearch;
+global using Serilog.Sinks.MicrosoftTeams;
+global using System.ComponentModel.DataAnnotations;
+global using System.Reflection;

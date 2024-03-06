@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="35.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\libs\database\Puzzle.Lib.Database\Puzzle.Lib.Database.csproj" />
+    <ProjectReference Include="..\Notiflow.IdentityServer.Core\Notiflow.IdentityServer.Core.csproj" />
+  </ItemGroup>
+
+</Project>

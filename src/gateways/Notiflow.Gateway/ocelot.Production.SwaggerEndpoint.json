@@ -1,0 +1,34 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "User",
+      "Config": [
+        {
+          "Name": "User API",
+          "Version": "v1",
+          "Url": "http://user.api:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "BackOffice",
+      "Config": [
+        {
+          "Name": "Notiflow API",
+          "Version": "v1",
+          "Url": "http://notiflow.api:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Scheduled",
+      "Config": [
+        {
+          "Name": "Scheduled API",
+          "Version": "v1",
+          "Url": "http://scheduled.api/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}
