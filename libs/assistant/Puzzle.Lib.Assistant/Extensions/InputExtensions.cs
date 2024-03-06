@@ -13,8 +13,12 @@ public static partial class InputExtensions
     /// <exception cref="RegexMatchTimeoutException"> Thrown when a regular expression matching operation exceeds the specified timeout.</exception>
     public static string ToMobilePhoneNumber(this string mobilePhoneNumber)
     {
+        if (mobilePhoneNumber == null)
+            throw new ArgumentNullException(nameof(mobilePhoneNumber), "The value cannot be null.");
+
         if (string.IsNullOrWhiteSpace(mobilePhoneNumber))
-            return mobilePhoneNumber;
+            throw new ArgumentNullException(nameof(mobilePhoneNumber), "The value cannot be an empty string.");
+        //return mobilePhoneNumber;
 
         return NonNumericRemoverRegex().Replace(mobilePhoneNumber, string.Empty);
     }

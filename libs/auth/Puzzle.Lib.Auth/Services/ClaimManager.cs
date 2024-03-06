@@ -44,7 +44,7 @@ public sealed class ClaimManager : IClaimService
         if (!IsUserAuthenticated)
             throw new UnauthorizedAccessException(ACCESS_EXCEPTION_MESSAGE);
 
-        string claimValue = _httpContextAccessor.HttpContext.User.FindFirstValue(claimType);
+        string claimValue = _httpContextAccessor.HttpContext?.User?.FindFirstValue(claimType);
         if (string.IsNullOrWhiteSpace(claimValue))
             throw new SecurityTokenDecompressionFailedException($"No {claimType} was found in the token. token is invalid.");
 

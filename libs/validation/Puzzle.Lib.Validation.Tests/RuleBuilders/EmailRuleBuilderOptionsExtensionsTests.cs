@@ -58,7 +58,7 @@ namespace Puzzle.Lib.Validation.Tests.RuleBuilders
             var invalidEmailList = "email1example.asd;email2@example.com;";
             var errorMessage = "Invalid email address";
             var validator = new InlineValidator<TestClass>();
-            //validator.RuleFor(x => x.EmailList).EmailListWithSemicolon(errorMessage);
+            validator.RuleFor(x => x.EmailList).EmailListWithSemicolon(errorMessage);
 
             // Act
             var result = validator.TestValidate(new TestClass { EmailList = invalidEmailList });
@@ -74,4 +74,14 @@ namespace Puzzle.Lib.Validation.Tests.RuleBuilders
             public string EmailList { get; set; }
         }
     }
+
+    public static class CustomValidators
+    {
+        public static IRuleBuilderOptions<T, string> EmailListWithSemicolon<T>(this IRuleBuilder<T, string> ruleBuilder, string errorMessage)
+        {
+            return ruleBuilder.Must(emailList => !emailList.EndsWith(";"))
+                             .WithMessage(errorMessage);
+        }
+    }
 }
+

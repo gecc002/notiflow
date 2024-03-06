@@ -20,6 +20,7 @@ namespace Puzzle.Lib.File.Tests.IOC
             var services = new ServiceCollection()
                 .AddOptions()
                 .AddSingleton<IConfiguration>(configuration);
+            services.Configure<FtpSetting>(configuration.GetSection("FtpSetting"));
 
             // Act
             //services.AddFtpSetting();

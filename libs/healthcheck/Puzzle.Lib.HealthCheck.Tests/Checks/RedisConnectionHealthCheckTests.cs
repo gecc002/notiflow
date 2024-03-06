@@ -31,7 +31,7 @@ namespace Puzzle.Lib.HealthCheck.Tests.Checks
 
             // Act & Assert
             var builder = Assert.Throws<ArgumentException>(() => asd.AddRedisCheck(connectionString));
-            Assert.Equal("Value cannot be null or empty. (Parameter 'connectionString')", builder.Message);
+            Assert.Equal("The value cannot be an empty string. (Parameter 'connectionString')", builder.Message);
         }
     }
 }

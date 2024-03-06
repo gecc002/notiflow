@@ -42,8 +42,12 @@ public static class InputFormatterExtensions
     /// <returns>The phone number formatted in GSM format. {0:0 ### ### ## ##}</returns>
     public static string ToMobilePhoneNumberFormat(this string mobilePhoneNumber)
     {
+        if (mobilePhoneNumber == null)
+            throw new ArgumentNullException(nameof(mobilePhoneNumber), "The value cannot be null.");
+
         if (string.IsNullOrWhiteSpace(mobilePhoneNumber))
-            return mobilePhoneNumber;
+            throw new ArgumentException("The value cannot be an empty string.",nameof(mobilePhoneNumber));
+        //return mobilePhoneNumber;
 
         return string.Format(CultureInfo.InvariantCulture, "{0:0 ### ### ## ##}", long.Parse(mobilePhoneNumber));
     }

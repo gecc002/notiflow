@@ -24,7 +24,7 @@ namespace Puzzle.Lib.Assistant.Tests.Extensions
 
             // Act & Assert
             var exception = Assert.Throws<ArgumentNullException>(() => input.ToMobilePhoneNumber());
-            Assert.Equal("Value cannot be null. (Parameter 'phoneNumber')", exception.Message);
+            Assert.Equal("The value cannot be null. (Parameter 'mobilePhoneNumber')", exception.Message);
         }
     }
 }

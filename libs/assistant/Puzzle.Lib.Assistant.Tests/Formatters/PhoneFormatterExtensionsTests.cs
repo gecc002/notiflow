@@ -9,7 +9,8 @@
             string phoneNumber = null;
 
             // Act and Assert
-            Assert.Throws<ArgumentNullException>(() => phoneNumber.ToMobilePhoneNumberFormat());
+            var exception = Assert.Throws<ArgumentNullException>(() => phoneNumber.ToMobilePhoneNumberFormat());
+            Assert.Equal("The value cannot be null. (Parameter 'mobilePhoneNumber')", exception.Message);
         }
 
         [Fact]
@@ -19,7 +20,8 @@
             string phoneNumber = string.Empty;
 
             // Act and Assert
-            Assert.Throws<ArgumentException>(() => phoneNumber.ToMobilePhoneNumberFormat());
+            var exception = Assert.Throws<ArgumentException>(() => phoneNumber.ToMobilePhoneNumberFormat());
+            Assert.Equal("The value cannot be an empty string. (Parameter 'mobilePhoneNumber')", exception.Message);
         }
 
         [Theory]

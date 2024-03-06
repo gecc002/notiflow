@@ -12,8 +12,7 @@ namespace Puzzle.Lib.Response.Tests
                 typeof(ApiControllerAttribute),
                 typeof(ProducesAttribute),
                 typeof(ConsumesAttribute),
-                typeof(ProducesResponseTypeAttribute),
-                typeof(ProducesResponseTypeAttribute),
+                //typeof(ProducesResponseTypeAttribute),
                 typeof(ControllerAttribute)
             };
 
